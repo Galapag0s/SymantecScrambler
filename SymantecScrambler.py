@@ -1,14 +1,15 @@
-import argparse
-import art 
+#!/bin/usr/python3
 
-python script
+import sys
+import argparse
+from art import *
+
 def main():
 	#Create Parser Obj to get input arguments
 	parser = argparse.ArgumentParser(description='Yet Another Web Fuzzing Tool Designed to Brute Force Directories')
 	parser.add_argument('-f','--file',  action="store", dest="fileName", help='Takes in the payload you would like scrambled')
-	parser.add_argument('-t', '--type', action="store", dest="payloadType", nargs='?', const='psh', type=string, default='psh', help="Takes in the expected payload type")
+	parser.add_argument('-t', '--type', action="store", dest="payloadType", nargs='?', const='psh', type=str, default='psh', help="Takes in the expected payload type")
 	parser.add_argument('-o','--output',  action="store", dest="outputFileName", help='File to output results to')
-	parser.add_argument('--verbose', action="store_true", help='Print Verbose Output')
 	parser.add_argument('--version', action='version', version='%(prog)s 1.1')
 
 	#Check and Ensure Proper Arguments were passed.  If not, displays help menu
@@ -18,7 +19,7 @@ def main():
 		parser.exit()
 	#Start the Scrambling
 	inputs = parser.parse_args()
-	
+
 	if inputs.payloadType == 'psh':
 		printAsciiEgg()
 		cleanFile = open(fileName,"r")
@@ -32,7 +33,8 @@ def main():
 		else:
 			print(scrambledData)
 def printAsciiTitle():
-	tprint("Symantec Scrambler",font="graffiti")
-	
+	asciiArt = text2art("Symantec Scrambler",font="graffiti")
+	print(asciiArt)
+
 if __name__ == "__main__":
 	main()
