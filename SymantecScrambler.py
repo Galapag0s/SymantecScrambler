@@ -3,6 +3,7 @@
 import sys
 import argparse
 from art import *
+from random import randint
 
 def main():
 	#Create Parser Obj to get input arguments
@@ -21,20 +22,35 @@ def main():
 	inputs = parser.parse_args()
 
 	if inputs.payloadType == 'psh':
-		printAsciiEgg()
-		cleanFile = open(fileName,"r")
+		printAsciiTitle()
+		#Read In Payload File
+		cleanFile = open(inputs.fileName,"r")
 		cleanContent = cleanFile.read()
-		
-
-		scrambledData = null
+		#Generate Random number to Make Payload More Random
+		breakup = randint(2,8)
+		#Break Payload Up into Sections
+		allData = [cleanContent[i:i+breakup] for i in range(0,len(cleanContent),breakup)]
+		#Gather All Unique Strings (This Is Used To Reduce Size of Payload
+		chunks = uniqueChars(allData)
+		print(chunks)
+		scrambledData = 'null'
 		if inputs.outputFileName == True:
-			scrambledFile = open(outputFileName,"w+")
+			scrambledFile = open(inputs.outputFileName,"w+")
 			scrambledFile.write(scrambledData)
 		else:
 			print(scrambledData)
+#Print Ascii Art Title
 def printAsciiTitle():
 	asciiArt = text2art("Symantec Scrambler",font="graffiti")
 	print(asciiArt)
+
+#Find Unique Characters in the payload
+def uniqueChars(list):
+	uniqueVals = []
+	for chunk in list:
+		if chunk not in uniqueVals:
+			uniqueVals.append(chunk)
+	return uniqueVals
 
 if __name__ == "__main__":
 	main()
