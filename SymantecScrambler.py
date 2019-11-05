@@ -97,7 +97,7 @@ def scrambleFile(fileName,chunks,allData)
 	i = 0
 	chunksNoChange=chunks
 	for chunk in chunks:
-		if "\n" in chunk:
+		if "\\n" in chunk:
 			chunk.replace('\\n','`n')
 		scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
 		#print('$' + str(i) + '=' + chunk)
