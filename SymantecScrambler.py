@@ -36,45 +36,48 @@ def main():
 		chunks = uniqueChars(allData)
 		#print(chunks)
 		if inputs.outputFileName:
-			scrambledFile = open(inputs.outputFileName,"w+")
-			i = 0
-			chunksNoChange=chunks
-			for chunk in chunks:
-				scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
-				#print('$' + str(i) + '=' + chunk)
-				i = i + 1
-			print("Wrote payload sections to file")
-			x = 0
-			for chunk in chunksNoChange:
-				for n, y in enumerate(allData):
-					if y == chunk:
-						allData[n] = '$' + str(chunks.index(chunk))
-				x = x + 1
-				print(x)
-			scrambledFile.write('$Command=' + ''.join(allData))
-			scrambledFile.write('\n')
-			scrambledFile.write('Get-Content $Command | iex')
+			scrambleFile(inputs.outputFileName,chunks,allData)
+			#scrambledFile = open(inputs.outputFileName,"w+")
+			#i = 0
+			#chunksNoChange=chunks
+			#for chunk in chunks:
+			#	scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
+			#	#print('$' + str(i) + '=' + chunk)
+			#	i = i + 1
+			#print("Wrote payload sections to file")
+			#x = 0
+			#for chunk in chunksNoChange:
+			#	for n, y in enumerate(allData):
+			#		if y == chunk:
+			#			allData[n] = '$' + str(chunks.index(chunk))
+			#	x = x + 1
+			#	print(x)
+			#scrambledFile.write('$Command=' + ''.join(allData))
+			#scrambledFile.write('\n')
+			#scrambledFile.write('Get-Content $Command | iex')
 		else:
-			scrambledFile = open("SymantecScrambler.ps1","w+")
-			i = 0
-			chunksNoChange=chunks
-			for chunk in chunks:
-				if "\n" in chunk:
-					chunk.replace('\\n','`n')
-				scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
-				#print('$' + str(i) + '=' + chunk)
-				i = i + 1
-			print("Wrote payload sections to file")
-			x = 0
-			for chunk in chunksNoChange:
-				for n, y in enumerate(allData):
-					if y == chunk:
-						allData[n] = '$' + str(chunks.index(chunk))
-				x = x + 1
-				print(x)
-			scrambledFile.write('$Command=' + ''.join(allData))
-			scrambledFile.write('\n')
-			scrambledFile.write('Get-Content $Command | iex')
+			fileName = "SymantecScrambler.ps1"
+			scrambleFile(fileName,chunks,allData)
+			#scrambledFile = open("SymantecScrambler.ps1","w+")
+			#i = 0
+			#chunksNoChange=chunks
+			#for chunk in chunks:
+			#	if "\n" in chunk:
+			#		chunk.replace('\\n','`n')
+			#	scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
+			#	#print('$' + str(i) + '=' + chunk)
+			#	i = i + 1
+			#print("Wrote payload sections to file")
+			#x = 0
+			#for chunk in chunksNoChange:
+			#	for n, y in enumerate(allData):
+			#		if y == chunk:
+			#			allData[n] = '$' + str(chunks.index(chunk))
+			#	x = x + 1
+			#	print(x)
+			#scrambledFile.write('$Command=' + ''.join(allData))
+			#scrambledFile.write('\n')
+			#scrambledFile.write('Get-Content $Command | iex')
 #Print Ascii Art Title
 def printAsciiTitle():
 	asciiArt = text2art("Symantec Scrambler",font="graffiti")
@@ -87,6 +90,24 @@ def uniqueChars(list):
 		if chunk not in uniqueVals:
 			uniqueVals.append(chunk)
 	return uniqueVals
+
+#Scrambled up the file
+def scrambleFile(fileName,chunks,allData)
+	scrambledFile = open(fileName,"w+")
+	i = 0
+	chunksNoChange=chunks
+	for chunk in chunks:
+		scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
+		#print('$' + str(i) + '=' + chunk)
+		i = i + 1
+	print("Wrote payload sections to file")
+	for chunk in chunksNoChange:
+		for n, y in enumerate(allData):
+			if y == chunk:
+				allData[n] = '$' + str(chunks.index(chunk))
+	scrambledFile.write('$Command=' + ''.join(allData))
+	scrambledFile.write('\n')
+	scrambledFile.write('Get-Content $Command | iex')
 
 if __name__ == "__main__":
 	main()
