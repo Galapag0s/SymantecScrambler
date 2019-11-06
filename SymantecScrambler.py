@@ -31,53 +31,16 @@ def main():
 		#Break Payload Up into Sections
 		print("Broke payload into sections")
 		allData = [cleanContent[i:i+breakup] for i in range(0,len(cleanContent),breakup)]
-		#print(allData)
 		#Gather All Unique Strings (This Is Used To Reduce Size of Payload
 		chunks = uniqueChars(allData)
 		#print(chunks)
 		if inputs.outputFileName:
 			scrambleFile(inputs.outputFileName,chunks,allData)
-			#scrambledFile = open(inputs.outputFileName,"w+")
-			#i = 0
-			#chunksNoChange=chunks
-			#for chunk in chunks:
-			#	scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
-			#	#print('$' + str(i) + '=' + chunk)
-			#	i = i + 1
-			#print("Wrote payload sections to file")
-			#x = 0
-			#for chunk in chunksNoChange:
-			#	for n, y in enumerate(allData):
-			#		if y == chunk:
-			#			allData[n] = '$' + str(chunks.index(chunk))
-			#	x = x + 1
-			#	print(x)
-			#scrambledFile.write('$Command=' + ''.join(allData))
-			#scrambledFile.write('\n')
-			#scrambledFile.write('Get-Content $Command | iex')
 		else:
 			fileName = "SymantecScrambler.ps1"
 			scrambleFile(fileName,chunks,allData)
-			#scrambledFile = open("SymantecScrambler.ps1","w+")
-			#i = 0
-			#chunksNoChange=chunks
-			#for chunk in chunks:
-			#	if "\n" in chunk:
-			#		chunk.replace('\\n','`n')
-			#	scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
-			#	#print('$' + str(i) + '=' + chunk)
-			#	i = i + 1
-			#print("Wrote payload sections to file")
-			#x = 0
-			#for chunk in chunksNoChange:
-			#	for n, y in enumerate(allData):
-			#		if y == chunk:
-			#			allData[n] = '$' + str(chunks.index(chunk))
-			#	x = x + 1
-			#	print(x)
-			#scrambledFile.write('$Command=' + ''.join(allData))
-			#scrambledFile.write('\n')
-			#scrambledFile.write('Get-Content $Command | iex')
+		print("File Write Complete")
+		print("Happy Hacking ;*")
 #Print Ascii Art Title
 def printAsciiTitle():
 	asciiArt = text2art("Symantec Scrambler",font="graffiti")
@@ -92,7 +55,7 @@ def uniqueChars(list):
 	return uniqueVals
 
 #Scrambled up the file
-def scrambleFile(fileName,chunks,allData)
+def scrambleFile(fileName,chunks,allData):
 	scrambledFile = open(fileName,"w+")
 	i = 0
 	chunksNoChange=chunks
@@ -100,7 +63,6 @@ def scrambleFile(fileName,chunks,allData)
 		if "\\n" in chunk:
 			chunk.replace('\\n','`n')
 		scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
-		#print('$' + str(i) + '=' + chunk)
 		i = i + 1
 	print("Wrote payload sections to file")
 	for chunk in chunksNoChange:
@@ -109,7 +71,7 @@ def scrambleFile(fileName,chunks,allData)
 				allData[n] = '$' + str(chunks.index(chunk))
 	scrambledFile.write('$Command=' + ''.join(allData))
 	scrambledFile.write('\n')
-	scrambledFile.write('Get-Content $Command | iex')
+	scrambledFile.write('iex $Command')
 
 if __name__ == "__main__":
 	main()
