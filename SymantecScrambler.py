@@ -60,18 +60,21 @@ def scrambleFile(fileName,chunks,allData):
 	i = 0
 	chunksNoChange=chunks
 	for chunk in chunks:
-		if "\\n" in chunk:
-			chunk.replace('\\n','`n')
-		scrambledFile.write('$' + str(i) + '=' + chunk + '\n')
+		#chunkData = chunk
+		chunk = chunk.replace('\n','`n')
+		chunk = chunk.replace('=','`=')
+		chunk = chunk.replace('$','`$')
+		chunk = chunk.replace(';','`;')
+		scrambledFile.write('$' + str(i) + '=' + chunk + ';\n')
 		i = i + 1
 	print("Wrote payload sections to file")
 	for chunk in chunksNoChange:
 		for n, y in enumerate(allData):
 			if y == chunk:
 				allData[n] = '$' + str(chunks.index(chunk))
-	scrambledFile.write('$Command=' + ''.join(allData))
+	scrambledFile.write('$Command=' + ''.join(allData) + ';')
 	scrambledFile.write('\n')
-	scrambledFile.write('iex $Command')
+	scrambledFile.write('iex $Command;')
 
 if __name__ == "__main__":
 	main()
