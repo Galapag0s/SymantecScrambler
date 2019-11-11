@@ -66,7 +66,7 @@ def scrambleFile(fileName,chunks,allData):
 		chunk = chunk.replace('$','`$')
 		chunk = chunk.replace(';','`;')
 		chunk = chunk.replace('@','`@')
-		chunk = chunk.replace('('.'`(')
+		chunk = chunk.replace('(','`(')
 		chunk = chunk.replace(')','`)')
 		chunk = chunk.replace('\"','`\"')
 		scrambledFile.write('$' + str(i) + '=' + chunk + ';\n')
