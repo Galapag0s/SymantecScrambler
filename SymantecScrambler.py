@@ -65,15 +65,10 @@ def scrambleFile(fileName,chunks,allData):
 		chunk = chunk.replace('=','`=')
 		chunk = chunk.replace('$','`$')
 		chunk = chunk.replace(';','`;')
-<<<<<<< HEAD
-		chunk = chunk.replace('(','`(')
-		chunk = chunk.replace(')','`)')
 		chunk = chunk.replace('@','`@')
-=======
 		chunk = chunk.replace('('.'`(')
 		chunk = chunk.replace(')','`)')
 		chunk = chunk.replace('\"','`\"')
->>>>>>> 2ab58db6bc8c3f73395d6c338b484fd21aa9a379
 		scrambledFile.write('$' + str(i) + '=' + chunk + ';\n')
 		i = i + 1
 	print("Wrote payload sections to file")
